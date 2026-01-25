@@ -17,12 +17,15 @@ pipeline {
             }
         }
 
-        stage('Package') {
-            steps {
-                echo 'Packaging the project'
-                bat 'python -m pip install wheel'               // install wheel package
-                bat 'python setup.py bdist_wheel'             // create .whl file
-            }
-        }
+        stage('Package') { 
+    steps {
+        echo 'Packaging the project'
+
+        // Ensure setuptools and wheel are installed
+        bat 'python -m pip install --upgrade setuptools wheel'
+
+        // Build the wheel file
+        bat 'python setup.py bdist_wheel'
     }
 }
+
